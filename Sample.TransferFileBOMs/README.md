@@ -1,13 +1,8 @@
-# Sample.SyncProjects
+# Sample.TransferFileBOMs
 
-## Challenge
+## Description
 
-New projects in a very early stage need a place where information can be collected and discussed – in Fusion Lifecycle. As soon the project reaches a certain maturity, it’s time to involve engineering. This sample workflow lets you define at which stage of the FLC-project and according Vault-project shall be created in Vault, with given properties and sub-folders. Enginers can now start their work with all information set.
-
-## Workflow
-
-This workflow sample synchronizes Fusion Lifecycle items with a configurable state with Vault folders/projects. The workflow runs on a Vault Job Processor and periodically queues a Fusion Lifecycle workspace for changes. If changes are detected a folder/project gets created or updated in Vault.
-
+This workflow transfers Vault file metadata, file BOM blobs and file attachments to Fusion Lifecycle. The workflow runs on a Vault Job Processor and is triggered by a Vault file state transition.
 
 ## Prerequisites
 The option **Enable Job Server** must be set in the **Job Server Management** in Vault and the installation explained below must be executed on a Job Processor machine.
@@ -40,9 +35,7 @@ An "Item Field Mapping" is available. Values from the **Fusion Lifecycle** colum
 ### Polling
 In order to query data periodically from FLC, Time triggered jobs are used. More information on this topic can found here: https://www.coolorange.com/wiki/doku.php?id=powerjobs_processor:jobprocessor:customization:trigger_jobs_to_a_certain_time
 
-## Remarks
-For revision-controlled workspaces the working versions of the items are used.
-
+## Remarks:
 
  
 ## At your own risk
