@@ -90,6 +90,7 @@ The following settings have to be adjusted:
 
 *Note: More information on time triggered jobs can be found here: https://www.coolorange.com/wiki/doku.php?id=powerjobs_processor:jobprocessor:start#time_triggered_jobs*
 
+*Note: For the first run of the time triggered job, all the Change Orders / Change Tasks are retrieved that fits to the state defined in the configuration. From second time onwards, only newly created or modified Change Orders / Change Tasks are retrieved*
 
 ### Trigger job on Vault ECO state change
 In order to configure the workflow to be executed when a Vault ECO is closed, the Lifecycle Event Editor Application must be used.
@@ -108,7 +109,7 @@ In order to configure the workflow to be executed when a Vault ECO is closed, th
 Start / Restart powerJobs Processor to automatically register the jobs to Vault's JobProcessor and to activate the time triggered jobs functionality
 
 
-## Know issues / limitations
+## Known issues / limitations
 * When a Vault ECO is closed, the corresponding FLC item metadata cannot be updated. This is because of a know limitation in one of the powerFLC PowerShell cmdlets
 * When an ECO is updated in Vault and a new affected item has been added to the FLC item and this item cannot be found in Vault, the comments of the Vault ECOs are not updated
 * The "powerFLC Configuration Manager" dialog may cause a Vault crash, when the "Attachment Folder" button is clicked but no folder gets selected in the upcomming dialog
