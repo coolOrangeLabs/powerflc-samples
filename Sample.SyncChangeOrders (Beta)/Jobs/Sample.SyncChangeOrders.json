@@ -1,0 +1,59 @@
+{
+  "Name": "Sample.SyncChangeOrders",
+  "FlcWorkspace": "Change Orders",
+  "VaultType": "Change Order",
+  "FlcUnique": "Number",
+  "VaultUnique": "Number",
+  "Settings": [
+    {
+      "Name": "From State",
+      "Type": "FLC State",
+      "Value": "Implementation",
+      "IsSystem": true
+    },
+    {
+      "Name": "To State",
+      "Type": "FLC State",
+      "Value": "Implementation",
+      "IsSystem": true
+    },
+    {
+      "Name": "Attachment Folder",
+      "Type": "Vault Folder",
+      "Value": "$/Designs/Fusion Lifecycle/Change Orders Attachments",
+      "IsSystem": true
+    },
+    {
+      "Name": "Attachment Subfolders",
+      "Type": "Boolean",
+      "Value": true,
+      "IsSystem": true
+    }
+  ],
+  "Mappings": [
+    {
+      "Name": "Item Field Mapping",
+      "FlcType": "Item Field",
+      "VaultType": "Change Order",
+      "FieldMappings": [
+        {
+          "Flc": "Number",
+          "Vault": "Change Order Number",
+          "Function": null
+        },
+        {
+          "Flc": "Description of Change",
+          "Vault": "Description (Item,CO)",
+          "Function": null
+        },
+        {
+          "Flc": "Title",
+          "Vault": "Title (Item,CO)",
+          "Function": null
+        }
+      ],
+      "IsSystem": true
+    }
+  ],
+  "IsSystem": true
+}

@@ -1,0 +1,16 @@
+{
+ "Trigger":
+  {
+    // This is a cron syntax expression. If you are not familiar with cron, please see: http://www.cronmaker.com/
+    // Here are some common cron expressions:
+    // every minute:        0 0/1 * 1/1 * ? *
+    // every weekday at 8th am: 0 0 8 ? * MON,TUE,WED,THU,FRI *
+    "TimeBased":	"0 0/1 * 1/1 * ? *",
+    // This is the name of the Vault you want to trigger the job
+    "Vault":		"Vault",
+    // And these two parameters are optional and self-explaining:
+    "Priority":		10,
+    "Description":	"Queries Fusion Lifecycle for new/updated Change Orders"
+    //PowerJobs triggers a Job only if the same job isn't already pending in the job queue.
+  }
+}
