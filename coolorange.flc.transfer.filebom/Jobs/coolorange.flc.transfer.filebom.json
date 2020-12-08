@@ -1,0 +1,168 @@
+{
+  "Name": "coolorange.flc.transfer.filebom",
+  "FlcWorkspace": "Vault Items and BOMs",
+  "VaultType": "File",
+  "FlcUnique": "Number",
+  "VaultUnique": "Part Number",
+  "Settings": [
+    {
+      "Name": "Upload File Attachments",
+      "Type": "Boolean",
+      "Value": true,
+      "IsSystem": true
+    },
+    {
+      "Name": "Upload Parent Drawing Attachments",
+      "Type": "Boolean",
+      "Value": true,
+      "IsSystem": true
+    },
+    {
+      "Name": "Enable Grid Transfer",
+      "Type": "Boolean",
+      "Value": true,
+      "IsSystem": true
+    }
+  ],
+  "Mappings": [
+    {
+      "Name": "Item Field Mapping",
+      "FlcType": "Item Field",
+      "VaultType": "File",
+      "FieldMappings": [
+        {
+          "Flc": "Number",
+          "Vault": "Part Number",
+          "Function": null
+        },
+        {
+          "Flc": "Title",
+          "Vault": "Title",
+          "Function": null
+        },
+        {
+          "Flc": "Description",
+          "Vault": "Description",
+          "Function": null
+        },
+        {
+          "Flc": "Thumbnail",
+          "Vault": "Thumbnail",
+          "Function": null
+        },
+        {
+          "Flc": "Category",
+          "Vault": "Category Name",
+          "Function": null
+        },
+        {
+          "Flc": "Last Updated By",
+          "Vault": "Created By",
+          "Function": null
+        },
+        {
+          "Flc": "Last Updated",
+          "Vault": "Date Modified",
+          "Function": null
+        },
+        {
+          "Flc": "Vault Lifecycle Definition",
+          "Vault": "Lifecycle Definition",
+          "Function": null
+        },
+        {
+          "Flc": "Vault State",
+          "Vault": "State",
+          "Function": null
+        },
+        {
+          "Flc": "Vault Revision",
+          "Vault": "Revision",
+          "Function": null
+        },
+        {
+          "Flc": "Dimensions/Size",
+          "Vault": "Dimensions/Size",
+          "Function": null
+        },
+        {
+          "Flc": "Mass",
+          "Vault": "Mass",
+          "Function": null
+        },
+        {
+          "Flc": "Material",
+          "Vault": "Material",
+          "Function": null
+        },
+        {
+          "Flc": "Semi-Finished",
+          "Vault": "Semi-finished",
+          "Function": null
+        },
+        {
+          "Flc": "Spare-Wear Part",
+          "Vault": "Spare-Wear Part",
+          "Function": null
+        },
+        {
+          "Flc": "Stock Number",
+          "Vault": "Stock Number",
+          "Function": null
+        },
+        {
+          "Flc": "File Name",
+          "Vault": "File Name (Historical)",
+          "Function": null
+        },
+        {
+          "Flc": "Folder",
+          "Vault": "Folder Path",
+          "Function": null
+        },
+        {
+          "Flc": "Project",
+          "Vault": "Project",
+          "Function": null
+        },
+        {
+          "Flc": "File Revision",
+          "Vault": "Rev Number",
+          "Function": null
+        },
+        {
+          "Flc": "File Version",
+          "Vault": "Version",
+          "Function": null
+        },
+        {
+          "Flc": "Provider",
+          "Vault": "Provider",
+          "Function": null
+        },
+        {
+          "Flc": "File Category",
+          "Vault": "Category Name (Historical)",
+          "Function": null
+        },
+        {
+          "Flc": "File State",
+          "Vault": "State (Historical)",
+          "Function": null
+        },
+        {
+          "Flc": "Vault Client Link",
+          "Vault": null,
+          "Function": "GetVaultThickClientLink"
+        },
+        {
+          "Flc": "Vault Thin Client Link",
+          "Vault": null,
+          "Function": "GetVaultThinClientLink"
+        }
+      ],
+      "IsSystem": true
+    }
+  ],
+  "IsSystem": true
+}
