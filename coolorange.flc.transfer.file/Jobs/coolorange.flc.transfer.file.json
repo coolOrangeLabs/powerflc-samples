@@ -1,0 +1,53 @@
+{
+  "Name": "coolorange.flc.transfer.file",
+  "FlcWorkspace": "Documents",
+  "VaultType": "File",
+  "FlcUnique": "Doc Number",
+  "VaultUnique": "File Name",
+  "Settings": [
+    {
+      "Name": "Upload File Attachments",
+      "Type": "Boolean",
+      "Value": true,
+      "IsSystem": true
+    },
+    {
+      "Name": "Upload Native Files",
+      "Type": "Boolean",
+      "Value": true,
+      "IsSystem": true
+    },
+    {
+      "Name": "Supported File Extensions",
+      "Type": "Text",
+      "Value": "idw; dwg",
+      "IsSystem": true
+    }
+  ],
+  "Mappings": [
+    {
+      "Name": "Item Field Mapping",
+      "FlcType": "Item Field",
+      "VaultType": "File",
+      "FieldMappings": [
+        {
+          "Flc": "Image",
+          "Vault": "Thumbnail",
+          "Function": null
+        },
+        {
+          "Flc": "Doc Number",
+          "Vault": "File Name",
+          "Function": null
+        },
+        {
+          "Flc": "Title",
+          "Vault": "Title",
+          "Function": null
+        }
+      ],
+      "IsSystem": true
+    }
+  ],
+  "IsSystem": true
+}
