@@ -1,0 +1,60 @@
+{
+  "Name": "coolorange.flc.sync.folder",
+  "FlcWorkspace": "Products",
+  "VaultType": "Folder",
+  "FlcUnique": "Number",
+  "VaultUnique": "Name",
+  "Settings": [
+    {
+      "Name": "Valid States",
+      "Type": "FLC States",
+      "Value": "Concept; Development; Pilot Run",
+      "IsSystem": true
+    },
+    {
+      "Name": "Target Folder",
+      "Type": "Vault Folder",
+      "Value": "$/Designs/Fusion Lifecycle",
+      "IsSystem": true
+    },
+    {
+      "Name": "Folder Category",
+      "Type": "Vault Category",
+      "Value": "Project",
+      "IsSystem": true
+    },
+    {
+      "Name": "Copy Folder Structure",
+      "Type": "Boolean",
+      "Value": true,
+      "IsSystem": true
+    },
+    {
+      "Name": "Folder Structure Template Path",
+      "Type": "Vault Folder",
+      "Value": "$/Templates/Fusion Lifecycle",
+      "IsSystem": true
+    }
+  ],
+  "Mappings": [
+    {
+      "Name": "Item Field Mapping",
+      "FlcType": "Item Field",
+      "VaultType": "Folder",
+      "FieldMappings": [
+        {
+          "Flc": "Description",
+          "Vault": "Description",
+          "Function": null
+        },
+        {
+          "Flc": "Number",
+          "Vault": "Project Number",
+          "Function": null
+        }
+      ],
+      "IsSystem": true
+    }
+  ],
+  "IsSystem": true
+}
