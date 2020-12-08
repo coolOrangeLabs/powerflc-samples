@@ -8,28 +8,31 @@ The affected items are automatically assigned to the Vault ECO as records. In ad
 
 When the ECO in Vault is closed, powerFLC automatically updates the CO/CT in Fusion Lifecycle by transitioning it to the next state.
 
-The entire workflow is script based and can be customized if needed.
+The entire workflow is based on PowerShell scripts and can be customized if needed.
 
 ![image](https://user-images.githubusercontent.com/5640189/101461195-d5a24500-393a-11eb-98a0-eb4d4a312396.png)
 
 ## Prerequisites
+The option **Enable Job Server** must be set in the **Job Server Management** in Vault and the installation explained below must be executed on a Job Processor machine.  
+The coolOrange products "powerJobs Processor" and "powerFLC" must be installed on the Job Processor machine. Both products can be downloaded from http://download.coolorange.com.  
+  
 The powerFLC “Vault Items and BOMs” Workflow must be installed. Detailed information on how to install the workflow can be found here: https://www.coolorange.com/wiki/doku.php?id=powerflc:getting_started:using_the_powerflc.workflows
 
-Note:
-*Affected Items on a CO/CT in Fusion Lifecycle have to be created by powerFLC in order to be handled correctly by this workflow.*
+*Note: Affected Items on a CO/CT in Fusion Lifecycle have to be created by powerFLC in order to be handled correctly by this workflow.*
 
 ## Workflow Installation
 -	Copy the files located in Jobs and Modules to “C:\ProgramData\coolOrange\powerJobs”
--	In Vault, open the “powerFLC Configuration Manager” from the tools menu
--	Import the workflow “Sample.SyncChangeOrders.json” using the "Import" button
+-	In Vault, open the “**powerFLC Configuration Manager**” from the tools menu
+-	Import the workflow “**Sample.SyncChangeOrders.json**” using the "Import" button
 -	Once imported, double-click the workflow to adjust the settings
 
 ## Settings
+![image](https://user-images.githubusercontent.com/5640189/101461358-097d6a80-393b-11eb-968f-f9f966316b06.png)
+
 ### Workspace and Unique Fields
 The selected **Workspace** is used to synchronize Fusion Lifecycle Change Orders /Change Tasks with Vault ECOs. A field from this workspace must be chosen as Unique Identifier. Typically, this field contains the number of a Change Order. The unique Vault property defaults to **Number** and should not be changed.
 
 ### Workflow Settings
-![image](https://user-images.githubusercontent.com/5640189/101461358-097d6a80-393b-11eb-968f-f9f966316b06.png)
 
 #### From State
 All Fusion Lifecyle Change Orders / Change Tasks in the selected state will be transferred to Vault. Default: *Implementation*
@@ -48,7 +51,7 @@ This folder is used to store the attachments from a Change Order / Change task i
 If set to "True" a subfolder for each ECO will be created in Vault underneath the "Attachment Folder" directory. Otherwise all files will be stored in the same location.
 
 ### Field Mappings  
-An "Item Field Mapping" is available to map Fusion Lifecycle CO/CT fields with Vault ECO user defined properties (UPDs). Values from the **Fusion Lifecycle Item Field** column will be copied to the Vault ECO UDPs chosen in the **Vault Change Order Property** column when an ECO is created or updated.  
+An "Item Field Mapping" is available to map Fusion Lifecycle CO/CT fields with Vault ECO user defined properties (UPDs). Values from the **Fusion Lifecycle Item Field** column will be copied to the Vault ECO UDPs chosen in the **Vault Change Order Property** column when an ECO is created or updated in Vault.  
 ![image](https://user-images.githubusercontent.com/5640189/101461528-4e090600-393b-11eb-9644-8e48aa8ed31b.png)
 
 
@@ -92,6 +95,7 @@ The following settings have to be adjusted:
 
 *Note: More information on time triggered jobs can be found here: https://www.coolorange.com/wiki/doku.php?id=powerjobs_processor:jobprocessor:start#time_triggered_jobs*
 
+*Note: For the first run of the time triggered job, all the Fusion Lifecycle items are retrieved that fit to the state defined in the configuration. From second time onwards, only newly created or modified items are retrieved*.
 
 ### Trigger job on Vault ECO state change
 In order to configure the workflow to be executed when a Vault ECO is closed, the Lifecycle Event Editor application must be used.
@@ -122,3 +126,6 @@ Start / restart powerJobs Processor to automatically register the jobs to Vault'
 ## Product documentation
 powerFLC: https://www.coolorange.com/wiki/doku.php?id=powerflc  
 powerJobs Processor: https://www.coolorange.com/wiki/doku.php?id=powerjobs_processor  
+
+## At your own risk
+The usage of these samples is at your own risk. There is no free support related to the samples. However, if you have questions to powerJobs or powerFLC, then visit http://www.coolorange.com/wiki or start a conversation in our support forum at http://support.coolorange.com/support/discussions
