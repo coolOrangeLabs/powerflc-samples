@@ -16,12 +16,6 @@
       "Type": "Boolean",
       "Value": true,
       "IsSystem": true
-    },
-    {
-      "Name": "Enable Grid Transfer",
-      "Type": "Boolean",
-      "Value": true,
-      "IsSystem": true
     }
   ],
   "Mappings": [
