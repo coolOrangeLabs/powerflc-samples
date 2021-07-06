@@ -1,12 +1,12 @@
 # Change Management Workflow (Release Candidate)
 
 ## Description
-The Change Management Workflow can be used to outsource a specific Fusion Lifecycle Change Order (CO) or Change Task (CT) state to Vault. 
+The Change Management Workflow can be used to outsource a specific Fusion 360 Manage Change Order (CO) or Change Task (CT) state to Vault. 
 
-Once a Fusion Lifecycle CO/CT reaches a configurable state, powerFLC creates a new representation of this CO/CT as an ECO in Vault.  
-The affected items are automatically assigned to the Vault ECO as records. In addition, documents attached to the CO/CT in Fusion Lifecycle are automatically downloaded, stored in Vault and attached to the ECO. 
+Once a Fusion 360 Manage CO/CT reaches a configurable state, powerPLM creates a new representation of this CO/CT as an ECO in Vault.  
+The affected items (Linked Items or Managed Items) are automatically assigned to the Vault ECO as records. In addition, documents attached to the CO/CT in Fusion 360 Manage are automatically downloaded, stored in Vault and attached to the ECO. 
 
-When the ECO in Vault is closed, powerFLC automatically updates the CO/CT in Fusion Lifecycle by transitioning it to the next state.
+When the ECO in Vault is closed, powerPLM automatically updates the CO/CT in Fusion 360 Manage by executing a configurable workflow action. Depending on the configuration in Fusion 360 Manage, this workflow action is transitioning the CO/CT to the next state.
 
 The entire workflow is based on PowerShell scripts and can be customized if needed.
 
@@ -16,9 +16,10 @@ The entire workflow is based on PowerShell scripts and can be customized if need
 The option **Enable Job Server** must be set in the **Job Server Management** in Vault and the installation explained below must be executed on a Job Processor machine.  
 The coolOrange products "powerJobs Processor" and "powerFLC" must be installed on the Job Processor machine. Both products can be downloaded from http://download.coolorange.com.  
   
-The powerFLC “Vault Items and BOMs” Workflow must be installed. Detailed information on how to install the workflow can be found here: https://www.coolorange.com/wiki/doku.php?id=powerflc:getting_started:using_the_powerflc.workflows
+The powerPLM “Vault Items and BOMs” Workflow must be installed. Items have to be transferred from Vault to Fusion 360 Manage by this workflow in order to be recoginzed and automatically added to an ECO.  
+Detailed information on how to install the workflow can be found here: https://www.coolorange.com/wiki/doku.php?id=powerflc:getting_started:using_the_powerflc.workflows
 
-*Note: Affected Items on a CO/CT in Fusion Lifecycle have to be created by powerFLC in order to be handled correctly by this workflow.*
+*Note: Affected Items on a CO/CT in Fusion 360 Manage have to be created by powerFLC in order to be handled correctly by this workflow.*
 
 ## Workflow Installation
 -	Copy the files located in Jobs and Modules to “C:\ProgramData\coolOrange\powerJobs”
@@ -27,42 +28,49 @@ The powerFLC “Vault Items and BOMs” Workflow must be installed. Detailed inf
 -	Once imported, double-click the workflow to adjust the settings
 
 ## Settings
-![image](https://user-images.githubusercontent.com/5640189/101461358-097d6a80-393b-11eb-968f-f9f966316b06.png)
+![image](https://user-images.githubusercontent.com/5640189/124611898-2b5bb300-de72-11eb-8e87-0f730b5051ee.png)
 
 ### Workspace and Unique Fields
-The selected **Workspace** is used to synchronize Fusion Lifecycle Change Orders /Change Tasks with Vault ECOs. A field from this workspace must be chosen as Unique Identifier. Typically, this field contains the number of a Change Order. The unique Vault property defaults to **Number** and should not be changed.
+The selected **Workspace** is used to synchronize Fusion 360 Manage Change Orders /Change Tasks with Vault ECOs. A field from this workspace must be chosen as Unique Identifier. Typically, this field contains the number of a Change Order. The unique Vault property defaults to **Number** and should not be changed.
 
 ### Workflow Settings
 
-#### From State
-All Fusion Lifecyle Change Orders / Change Tasks in the selected state will be transferred to Vault. Default: *Implementation*
+#### Trigger State
+All Fusion Lifecyle Change Orders / Change Tasks in the selected state will be transferred to Vault. Default: *Perform Change*
 
-#### To State
-Once an ECO is closed in Vault, the corresponding CO/CT in Fusion Lifecycle will be transitioned to the selected state.
-To find the correct state, go to Fusion Lifecycle, open the "Workspace Manager", select the workspace (Change Orders) and open the "Workflow Editor". Click on “Workflow Summary” to find the transition that needs to be executed:  
-![image](https://user-images.githubusercontent.com/5640189/101461436-29ad2980-393b-11eb-9934-e112ebbc3b1a.png)
+#### Affected Items Lifecycle Transition
+Once an ECO is closed in Vault, the corresponding CO/CT in Fusion 360 Manage will be updated with all affected items that have been added to the Vault ECO and where not present in Fusion 360 Manage before.  
+To find the correct Lifecycle Transition, go to Fusion 360 Manage, from the main menu navigate to "Administration" > "System Configuration" > "Lifecycle Edittor" and select "Change Orders" from the "Highlight Workspaces" section: 
+![image](https://user-images.githubusercontent.com/5640189/124617111-f736c100-de76-11eb-83dc-f617542058dc.png)
 
-Example: If you have chosen "Implementation" as "From State" and you want to execute the "Approve" transition, you have to select "Implementation" as "To State"  
-Default: *Implementation*
+Default: *To Pre-Release*
 
-#### Attachment Folder
-This folder is used to store the attachments from a Change Order / Change task in Vault. The files in that folder are linked to the related Vault ECOs.
-#### Attachment Subfolders
-If set to "True" a subfolder for each ECO will be created in Vault underneath the "Attachment Folder" directory. Otherwise all files will be stored in the same location.
+#### Workflow Action
+Once an ECO is closed in Vault, a workflow action (transition) on the corresponding CO/CT in Fusion 360 Manage will be executed.
+To find the correct transition, go to Fusion 360 Manage, open the "Workspace Manager", select the workspace (Change Orders) and open the "Workflow Editor". Click on “Workflow Summary” to find the transition that needs to be executed:  
+![image](https://user-images.githubusercontent.com/5640189/124615081-3237f500-de75-11eb-9e1d-1687a92d71a7.png)
+ 
+Default: *Update Tasks*
+
+*Note: if the Lifecycle is not present at an affected item, the workflow action cannot be executed!*
+
+#### Vault Attachments Folder
+This folder is used to store the attachments from a Change Order / Change task in Vault. The files in that folder are linked to the related Vault ECOs. For each ECO an new subfolder with the name of the ECO will be created automatically.
 
 ### Field Mappings  
-An "Item Field Mapping" is available to map Fusion Lifecycle CO/CT fields with Vault ECO user defined properties (UPDs). Values from the **Fusion Lifecycle Item Field** column will be copied to the Vault ECO UDPs chosen in the **Vault Change Order Property** column when an ECO is created or updated in Vault.  
-![image](https://user-images.githubusercontent.com/5640189/101461528-4e090600-393b-11eb-9644-8e48aa8ed31b.png)
+An "Item Field Mapping" is available to map Fusion 360 Manage CO/CT fields with Vault ECO user defined properties (UPDs). Values from the **Fusion 360 Manage Item Field** column will be copied to the Vault ECO UDPs chosen in the **Vault Change Order Property** column when an ECO is created or updated in Vault.  
+![image](https://user-images.githubusercontent.com/5640189/124615209-54ca0e00-de75-11eb-9f2f-f6505cf52ae3.png)
 
-
+*Note: The "Description" value on a Fusion 360 Manage Change Order contains is HTML formated.
+This formating will be removed by the workflow since Vault does not support HTML formated strings!*
 
 *Note: The ECO in Vault is always created using the default routing. This cannot be changed by configuration but in the script files if needed*
 
 
 ## Job Trigger
 The workflow consists of two different components and thus needs to implement two different triggers:
-1) __Regularly__ query Fusion Lifecycle to get all new or updated Change Orders / Change Tasks in order to create / update the ECOs in Vault
-2) __When a Vault ECO is closed__, update the Fusion Lifecycle Change Order / Change Task 
+1) __Regularly__ query Fusion 360 Manage to get all new or updated Change Orders / Change Tasks in order to create / update the ECOs in Vault
+2) __When a Vault ECO is closed__, update the Fusion 360 Manage Change Order / Change Task 
 
 ### Regularly trigger jobs
 In order to configure the workflow to be executed in a specific interval the file *C:\ProgramData\coolOrange\powerJobs\Jobs\Sample.SyncChangeOrders.settings* must be configured:
@@ -75,12 +83,12 @@ In order to configure the workflow to be executed in a specific interval the fil
     // Here are some common cron expressions:
     // every minute:        0 0/1 * 1/1 * ? *
     // every weekday at 8th am: 0 0 8 ? * MON,TUE,WED,THU,FRI *
-    "TimeBased":	"0 0/1 * 1/1 * ? *",
+    "TimeBased":	"0 0/10 * 1/1 * ? *",
     // This is the name of the Vault you want to trigger the job
     "Vault":		"Vault",
     // And these two parameters are optional and self-explaining:
-    "Priority":		10,
-    "Description":	"Queries Fusion Lifecycle for new/updated Change Orders"
+    "Priority":		101,
+    "Description":	"Queries Fusion 360 Manage for new/updated Change Orders"
     //PowerJobs triggers a Job only if the same job isn't already pending in the job queue.
   }
 }
@@ -89,13 +97,15 @@ The following settings have to be adjusted:
 
 | Setting | Description | Default |
 | --- | --- | --- |
-| Time Based | Indicates when / how often the job should be triggered (cron syntax) | 1 Minute |
+| Time Based | Indicates when / how often the job should be triggered (cron syntax) | 10 Minutes |
 | Vault | Name of the Vault the job should be triggered for  | Vault |
-| Priority | Priority of the job | 10 |
+| Priority | Priority of the job | 101 |
 
 *Note: More information on time triggered jobs can be found here: https://www.coolorange.com/wiki/doku.php?id=powerjobs_processor:jobprocessor:start#time_triggered_jobs*
 
-*Note: For the first run of the time triggered job, all the Fusion Lifecycle items are retrieved that fit to the state defined in the configuration. From second time onwards, only newly created or modified items are retrieved*.
+*Note: Please make sure the priority is greater than 100. This is important because this workflow expects the items transferred to the "Vault Items and BOMs" workspace before the Vault ECO is synchronized with the CO/CT.*
+
+*Note: For the first run of the time triggered job, all the Fusion 360 Manage items are retrieved that fit to the state defined in the configuration. From second time onwards, only newly created or modified items are retrieved.*
 
 ### Trigger job on Vault ECO state change
 In order to configure the workflow to be executed when a Vault ECO is closed, the Lifecycle Event Editor application must be used.
@@ -118,7 +128,7 @@ Start / restart powerJobs Processor to automatically register the jobs to Vault'
 
 
 ## Known issues / limitations
-* When a Vault ECO is closed, the corresponding FLC item metadata cannot be updated. This is because of a know limitation in one of the powerFLC PowerShell cmdlets
+* When a Vault ECO is closed, the corresponding FLC item metadata won't be updated.
 * When an ECO is updated in Vault and a new affected item has been added to the FLC item and this item cannot be found in Vault, the comments of the Vault ECOs are not updated
 * The "powerFLC Configuration Manager" dialog may cause a Vault crash, when the "Attachment Folder" button is clicked but no folder gets selected in the upcomming dialog
 
