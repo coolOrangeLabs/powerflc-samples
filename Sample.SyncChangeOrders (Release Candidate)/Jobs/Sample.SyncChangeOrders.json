@@ -1,0 +1,64 @@
+{
+  "Name": "Sample.SyncChangeOrders",
+  "FlcWorkspace": "Change Orders",
+  "VaultType": "Change Order",
+  "FlcUnique": "Number",
+  "VaultUnique": "Number",
+  "Settings": [
+    {
+      "Name": "Trigger State",
+      "Type": "FLC State",
+      "Value": "Perform Change",
+      "IsSystem": true
+    },
+    {
+      "Name": "Affected Items Lifecycle Transition",
+      "Type": "Text",
+      "Value": "To Pre-Release",
+      "IsSystem": true
+    },
+    {
+      "Name": "Workflow Action",
+      "Type": "Text",
+      "Value": "Update Tasks",
+      "IsSystem": true
+    },
+    {
+      "Name": "Vault Attachments Folder",
+      "Type": "Vault Folder",
+      "Value": "$/Designs/Fusion Lifecycle",
+      "IsSystem": true
+    }
+  ],
+  "Mappings": [
+    {
+      "Name": "Item Field Mapping",
+      "FlcType": "Item Field",
+      "VaultType": "Change Order",
+      "FieldMappings": [
+        {
+          "Flc": "Title",
+          "Vault": "Title (Item,CO)",
+          "Function": null
+        },
+        {
+          "Flc": "Description",
+          "Vault": "Description (Item,CO)",
+          "Function": null
+        },
+        {
+          "Flc": "Completion Date",
+          "Vault": "Due Date",
+          "Function": null
+        },
+        {
+          "Flc": "Priority",
+          "Vault": "Priority",
+          "Function": null
+        }
+      ],
+      "IsSystem": true
+    }
+  ],
+  "IsSystem": true
+}
