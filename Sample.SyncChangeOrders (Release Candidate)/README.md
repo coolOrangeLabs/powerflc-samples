@@ -1,7 +1,7 @@
 [![powerPLM](https://img.shields.io/badge/COOLORANGE%20powerPLM-22.0.8-orange.svg)](https://www.coolorange.com/products/powerplm/)
 [![powerPLM](https://img.shields.io/badge/COOLORANGE%20powerJobs-22.0.3-orange.svg)](https://www.coolorange.com/products/powerplm/)
 
-**This Release Candidate requires powerPLM 22.0.8 and powerJobs 22.0.3 to function property!!!**
+**This Release Candidate requires powerPLM 22.0.8 and powerJobs 22.0.3 to function properly!!!**
 
 # Change Management Workflow (Release Candidate)
 
