@@ -1,3 +1,8 @@
+[![powerPLM](https://img.shields.io/badge/COOLORANGE%20powerPLM-22.0.8-orange.svg)](https://www.coolorange.com/products/powerplm/)
+[![powerPLM](https://img.shields.io/badge/COOLORANGE%20powerJobs-22.0.3-orange.svg)](https://www.coolorange.com/products/powerplm/)
+
+**This Release Candidate requires powerPLM 22.0.8 and powerJobs 22.0.3 to function property!!!**
+
 # Change Management Workflow (Release Candidate)
 
 ## Description
@@ -14,12 +19,12 @@ The entire workflow is based on PowerShell scripts and can be customized if need
 
 ## Prerequisites
 The option **Enable Job Server** must be set in the **Job Server Management** in Vault and the installation explained below must be executed on a Job Processor machine.  
-The coolOrange products "powerJobs Processor" and "powerFLC" must be installed on the Job Processor machine. Both products can be downloaded from http://download.coolorange.com.  
+The coolOrange products "powerJobs Processor" and "powerPLM" must be installed on the Job Processor machine. Both products can be downloaded from http://download.coolorange.com.  
   
 The powerPLM “Vault Items and BOMs” Workflow must be installed. Items have to be transferred from Vault to Fusion 360 Manage by this workflow in order to be recoginzed and automatically added to an ECO.  
 Detailed information on how to install the workflow can be found here: https://www.coolorange.com/wiki/doku.php?id=powerflc:getting_started:using_the_powerflc.workflows
 
-*Note: Affected Items on a CO/CT in Fusion 360 Manage have to be created by powerFLC in order to be handled correctly by this workflow.*
+*Note: Affected Items on a CO/CT in Fusion 360 Manage have to be created by powerPLM in order to be handled correctly by this workflow.*
 
 ## Workflow Installation
 -	Copy the files located in Jobs and Modules to “C:\ProgramData\coolOrange\powerJobs”
@@ -130,12 +135,12 @@ Start / restart powerJobs Processor to automatically register the jobs to Vault'
 ## Known issues / limitations
 * When a Vault ECO is closed, the corresponding FLC item metadata won't be updated.
 * When an ECO is updated in Vault and a new affected item has been added to the FLC item and this item cannot be found in Vault, the comments of the Vault ECOs are not updated
-* The "powerFLC Configuration Manager" dialog may cause a Vault crash, when the "Attachment Folder" button is clicked but no folder gets selected in the upcomming dialog
+* The "powerPLM Configuration Manager" dialog may cause a Vault crash, when the "Attachment Folder" button is clicked but no folder gets selected in the upcomming dialog
 
 
 ## Product documentation
-powerFLC: https://www.coolorange.com/wiki/doku.php?id=powerflc  
+powerPLM: https://www.coolorange.com/wiki/doku.php?id=powerflc  
 powerJobs Processor: https://www.coolorange.com/wiki/doku.php?id=powerjobs_processor  
 
 ## At your own risk
-The usage of these samples is at your own risk. There is no free support related to the samples. However, if you have questions to powerJobs or powerFLC, then visit http://www.coolorange.com/wiki or start a conversation in our support forum at http://support.coolorange.com/support/discussions
+The usage of these samples is at your own risk. There is no free support related to the samples. However, if you have questions to powerJobs or powerPLM, then visit http://www.coolorange.com/wiki or start a conversation in our support forum at http://support.coolorange.com/support/discussions
