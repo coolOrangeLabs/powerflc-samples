@@ -79,7 +79,7 @@ Default: *Update Tasks*
 *Note: if the Lifecycle is not present at an affected item, the workflow action cannot be executed!*
 
 #### Vault Attachments Folder
-This folder is used to store the attachments from a Change Order / Change task in Vault. The files in that folder are linked to the related Vault ECOs. For each ECO a new subfolder with the name of the ECO will be created automatically.
+This folder is used to store the attachments from a Change Order in Vault. The files in that folder are listed in the Vault ECOs "Files" tab. For each ECO a new subfolder with the name of the ECO will be created automatically.
 
 ### Field Mappings  
 An "Item Field Mapping" is available to map Fusion 360 Manage CO fields with Vault ECO user defined properties (UPDs). Values from the **Fusion 360 Manage Item Field** column will be copied to the Vault ECO UDPs chosen in the **Vault Change Order Property** column when an ECO is created or updated in Vault.  
