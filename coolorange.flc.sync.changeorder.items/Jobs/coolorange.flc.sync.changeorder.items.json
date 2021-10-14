@@ -1,0 +1,47 @@
+{
+  "Name": "coolorange.flc.sync.changeorder.items",
+  "FlcWorkspace": "Change Orders",
+  "VaultType": "Item",
+  "FlcUnique": "Number",
+  "VaultUnique": "Number",
+  "Settings": [
+    {
+      "Name": "InReview_FLC",
+      "Type": "FLC State",
+      "Value": "CCB Review",
+      "IsSystem": false
+    },
+    {
+      "Name": "InReview_Vault",
+      "Type": "Vault Lifecycle State",
+      "Value": "In Review",
+      "IsSystem": false
+    },
+    {
+      "Name": "WIP_FLC",
+      "Type": "FLC State",
+      "Value": "Implementation",
+      "IsSystem": false
+    },
+    {
+      "Name": "WIP_Vault",
+      "Type": "Vault Lifecycle States",
+      "Value": "Work in Progress",
+      "IsSystem": false
+    },
+    {
+      "Name": "Released_FLC",
+      "Type": "FLC State",
+      "Value": "Released",
+      "IsSystem": false
+    },
+    {
+      "Name": "Released_Vault",
+      "Type": "Vault Lifecycle State",
+      "Value": "Released",
+      "IsSystem": false
+    }
+  ],
+  "Mappings": [],
+  "IsSystem": false
+}
