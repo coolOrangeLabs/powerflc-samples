@@ -6,6 +6,18 @@
   "VaultUnique": "Number",
   "Settings": [
     {
+      "Name": "ItemLifeCycle",
+      "Type": "Vault Lifecycle Definition",
+      "Value": "Item Release Process",
+      "IsSystem": false
+    },
+    {
+      "Name": "IsSyncedToVaultProperty",
+      "Type": "FLC Item Details Field",
+      "Value": "",
+      "IsSystem": false
+    },
+    {
       "Name": "InReview_FLC",
       "Type": "FLC State",
       "Value": "CCB Review",
@@ -25,14 +37,14 @@
     },
     {
       "Name": "WIP_Vault",
-      "Type": "Vault Lifecycle States",
+      "Type": "Vault Lifecycle State",
       "Value": "Work in Progress",
       "IsSystem": false
     },
     {
       "Name": "Released_FLC",
       "Type": "FLC State",
-      "Value": "Released",
+      "Value": "Approved",
       "IsSystem": false
     },
     {
