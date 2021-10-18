@@ -14,7 +14,7 @@
     {
       "Name": "IsSyncedToVaultProperty",
       "Type": "FLC Item Details Field",
-      "Value": "",
+      "Value": "Is Synced to Vault",
       "IsSystem": false
     },
     {

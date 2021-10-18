@@ -42,15 +42,17 @@ function Get-VaultItemsByNumbers {
 
 Import-Module powerFLC
 
-Open-VaultConnection
-
 Write-Host "Starting job '$($job.Name)'..."
 
 Write-Host "Connecting to Fusion Lifecycle..."
 
-$powerFlcSettings = ConvertFrom-Json $vault.KnowledgeVaultService.GetVaultOption("POWERFLC_SETTINGS")
-$workflow = $powerFlcSettings.Workflows | Where-Object { $_.Name -eq 'coolorange.flc.sync.changeorder.items' }
-$tenant = $powerFlcSettings.Tenant
+if(-not $iamrunningjobprocessor) {
+	# Set by coolOrange.powerFLC.Workflows.Common/Open-VaultConnection when running in job processor
+	Open-VaultConnection
+	$powerFlcSettings = ConvertFrom-Json $vault.KnowledgeVaultService.GetVaultOption("POWERFLC_SETTINGS")
+	$workflow = $powerFlcSettings.Workflows | Where-Object { $_.Name -eq 'coolorange.flc.sync.changeorder.items' }
+	$tenant = $powerFlcSettings.Tenant
+}
 
 Connect-FLC -Tenant $tenant.Name -ClientId $tenant.ClientId -ClientSecret $tenant.ClientSecret -UserId $tenant.SystemUserEmail
 Write-Host "Connected to $($flcConnection.Url)"
@@ -58,11 +60,16 @@ Write-Host "Connected to $($flcConnection.Url)"
 $workspace = $flcConnection.Workspaces | Where-Object { $_.Name -eq $workflow.FlcWorkspace }
 Write-Host "Workspace: $($workspace.Name)"
 
-$flcStates = $workflow.Settings | Where-Object { $_.Type -eq 'FLC State' } | Select-Object -ExpandProperty Value
 
 Write-Host "Create change order groups"
 $flcStates = $workflow.Settings | Where-Object { $_.Type -eq 'FLC State' }
+if(-not $flcStates) {
+	throw "Define at least one 'FLC State' setting"
+}
 $vaultStates = $workflow.Settings | Where-Object { $_.Type -eq 'Vault Lifecycle State' }
+if(-not $flcStates) {
+	throw "Define at least one 'Vault Lifecycle State' setting"
+}
 $flcChangeOrderGroups = @{}
 foreach($flcState in $flcStates) {
 	$stateKey = $flcState.Name -split '_' | Select-Object -First 1
@@ -71,10 +78,17 @@ foreach($flcState in $flcStates) {
 }
 
 Write-Host "Add Flc change orders to change order groups"
-#extend filter to only include desired change orders
-$filter = '(workflowState = "{0}")' -f ($flcStates.Value -join '" OR "')
+$isSyncedToVaultPropertyName = $workflow.Settings | Where-Object { $_.Name -eq 'IsSyncedToVaultProperty' } | Select-Object -ExpandProperty Value
+$isSyncedToVaultProperty = $workspace.ItemFields.Find($isSyncedToVaultPropertyName)
+$filter = '(ITEM_DETAILS:{0} = True) AND (workflowState = "{1}")' -f $isSyncedToVaultProperty.Id, ($flcStates.Value -join '" OR "')
+
 $flcChangeOrdersInValidState = Get-FLCItems -Workspace $workspace.Name -Filter $filter
-$flcChangeOrdersInValidState = $flcChangeOrdersInValidState | Where-Object { $_.Title -like 'thomas*' }
+
+if(-not $flcChangeOrdersInValidState) { 
+	Write-Host "Completed job '$($job.Name)'"
+	return 
+}
+
 foreach($flcChangeOrder in $flcChangeOrdersInValidState) {
 	$flcChangeOrderGroups[$flcChangeOrder.WorkflowState].FlcChangeOrders += $flcChangeOrder
 }
@@ -96,12 +110,19 @@ foreach($flcChangeOrderGroup in $flcChangeOrderGroups.Values) {
 	
 	$allLifeCycleDefs = $vault.LifeCycleService.GetAllLifeCycleDefinitions()
 	$lifeCycleName = $workflow.Settings | Where-Object { $_.Name -eq 'ItemLifeCycle' } | Select-Object -ExpandProperty Value
+	if(-not $lifeCycleName) {
+		throw "Define a valid 'ItemLifeCycle' workflow setting!"
+	}
 	$lifeCycleDef = $allLifeCycleDefs | Where-Object { $_.DispName -eq $lifeCycleName }
 	$lifecycleState = $lifecycleDef.StateArray | Where-Object { $_.DispName -eq $flcChangeOrderGroup.VaultItemState }
 	
 	$vaultItems = Get-VaultItemsByNumbers -Numbers @($flcChangeOrderGroup.FlcAffectedItems.($workflow.FlcUnique))
-	#todo: skip items that are in correct state already
-	$vault.ItemService.UpdateItemLifeCycleStates(@($vaultItems.MasterId), @(1..$vaultItems.Count | ForEach-Object { $lifecycleState.Id }), "State changed by coolorange.flc.sync.changeorder.items")
+	$vaultItemsNotInTargetState = $vaultItems | Where-Object { $_.LfCycStateId -ne $lifecycleState.Id }
+	if(-not $vaultItemsNotInTargetState) {
+		continue
+	}
+
+	$vault.ItemService.UpdateItemLifeCycleStates(@($vaultItemsNotInTargetState.MasterId), @(1..$vaultItemsNotInTargetState.Count | ForEach-Object { $lifecycleState.Id }), "State changed by coolorange.flc.sync.changeorder.items")
 }
 
 Write-Host "Completed job '$($job.Name)'"
