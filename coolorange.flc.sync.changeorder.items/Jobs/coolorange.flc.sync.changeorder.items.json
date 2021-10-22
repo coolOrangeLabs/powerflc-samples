@@ -18,37 +18,37 @@
       "IsSystem": false
     },
     {
-      "Name": "InReview_FLC",
+      "Name": "InReview",
       "Type": "FLC State",
       "Value": "CCB Review",
       "IsSystem": false
     },
     {
-      "Name": "InReview_Vault",
+      "Name": "InReview",
       "Type": "Vault Lifecycle State",
       "Value": "In Review",
       "IsSystem": false
     },
     {
-      "Name": "WIP_FLC",
+      "Name": "WIP",
       "Type": "FLC State",
       "Value": "Implementation",
       "IsSystem": false
     },
     {
-      "Name": "WIP_Vault",
+      "Name": "WIP",
       "Type": "Vault Lifecycle State",
       "Value": "Work in Progress",
       "IsSystem": false
     },
     {
-      "Name": "Released_FLC",
+      "Name": "Released",
       "Type": "FLC State",
       "Value": "Approved",
       "IsSystem": false
     },
     {
-      "Name": "Released_Vault",
+      "Name": "Released",
       "Type": "Vault Lifecycle State",
       "Value": "Released",
       "IsSystem": false

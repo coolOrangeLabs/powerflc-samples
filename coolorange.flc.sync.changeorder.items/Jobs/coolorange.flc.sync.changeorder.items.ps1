@@ -12,34 +12,6 @@ class ChangeOrderGroup {
 	}
 }
 
-function Get-VaultItemsByNumbers {
-	param ([string[]] $Numbers)
-
-	$totalHits = @()
-	foreach($number in $Numbers) {
-		$searchConditions = New-Object Autodesk.Connectivity.WebServices.SrchCond
-		$searchConditions.PropDefId = 56
-		$searchConditions.PropTyp = [Autodesk.Connectivity.Webservices.PropertySearchType]::SingleProperty
-		$searchConditions.SrchOper = 3
-		$searchConditions.SrchRule = [Autodesk.Connectivity.WebServices.SearchRuleType]::Must
-		$searchConditions.SrchTxt = $number
-		
-		$sortConditions = $null
-		$requestLatestOnly = $true
-		$bookmark = $null
-		$searchstatus = $null
-		
-		$hits = @()
-		Write-Host "Searching item '$number'"
-		do {
-			[array]$hits += $vault.ItemService.FindItemRevisionsBySearchConditions($searchConditions, $sortConditions, $requestLatestOnly, [ref]$bookmark,[ref]$searchstatus)
-		} while($hits.Count -lt $searchstatus.TotalHits)
-		$totalHits += $hits
-	}
-
-	return $totalHits
-}
-
 Import-Module powerFLC
 
 Write-Host "Starting job '$($job.Name)'..."
@@ -72,8 +44,7 @@ if(-not $flcStates) {
 }
 $flcChangeOrderGroups = @{}
 foreach($flcState in $flcStates) {
-	$stateKey = $flcState.Name -split '_' | Select-Object -First 1
-	$vaultState = $vaultStates | Where-Object { $_.Name -like "$($stateKey)_*" }
+	$vaultState = $vaultStates | Where-Object { $_.Name -eq $flcState.Name }
 	$flcChangeOrderGroups.Add($flcState.Value, [ChangeOrderGroup]::new($flcState.Value, $vaultState.Value))
 }
 
@@ -116,12 +87,21 @@ foreach($flcChangeOrderGroup in $flcChangeOrderGroups.Values) {
 	$lifeCycleDef = $allLifeCycleDefs | Where-Object { $_.DispName -eq $lifeCycleName }
 	$lifecycleState = $lifecycleDef.StateArray | Where-Object { $_.DispName -eq $flcChangeOrderGroup.VaultItemState }
 	
-	$vaultItems = Get-VaultItemsByNumbers -Numbers @($flcChangeOrderGroup.FlcAffectedItems.($workflow.FlcUnique))
+	$vaultItems = @()
+	Write-Host "Getting Vault items"
+	foreach($number in @($flcChangeOrderGroup.FlcAffectedItems.($workflow.FlcUnique))) {
+		Write-Host "Searching for item '$number'"
+		$vaultItems += $vault.ItemService.GetLatestItemByItemNumber($number)
+	}
+
+	Write-Host "Filter out items that are in target state already"
 	$vaultItemsNotInTargetState = $vaultItems | Where-Object { $_.LfCycStateId -ne $lifecycleState.Id }
 	if(-not $vaultItemsNotInTargetState) {
+		Write-Host "All items are in target state already. Exit job."
 		continue
 	}
 
+	Write-Host "Putting items into target state '$($vaultItems.VaultItemState)'"
 	$vault.ItemService.UpdateItemLifeCycleStates(@($vaultItemsNotInTargetState.MasterId), @(1..$vaultItemsNotInTargetState.Count | ForEach-Object { $lifecycleState.Id }), "State changed by coolorange.flc.sync.changeorder.items")
 }
 

@@ -15,7 +15,7 @@ The coolorange.flc.sync.changeorder.items workflow can be used to change Vault i
 ## powerFLC Workflow
 * **ItemLifeCycle**: This is the life cycle the controlled items need to be in
 * **IsSyncedToVaultProperty**: This is the property that controlls wether a change order will be handled by the job or not
-* For each transition that the job is supposed to execute there needs to be an **FLC State** setting and a matching **Vault Lifecycle State** setting. The settings need to be prefixed with the same text and an underscore, so they can be matched. For example **Released_FLC** and **Released_Vault**
+* For each transition that the job is supposed to execute there needs to be an **FLC State** setting and a matching **Vault Lifecycle State** setting. The two settings must have identical names.
 
 ## Fusion Workspace
 * A **Check Box** property needs to be defined and added to the **item details**. This property needs to be configured in the powerFLC workflow setting **IsSyncedToVaultProperty**
