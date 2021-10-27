@@ -1,13 +1,13 @@
 class ChangeOrderGroup {
 	[string] $FlcWorkflowState
 	[string] $VaultItemState
-	[System.Collections.Generic.List[PsObject]] $FlcChangeOrders
+	[PsObject] $FlcChangeOrder
 	[System.Collections.Generic.List[PsObject]] $FlcAffectedItems
 
-	ChangeOrderGroup($flcWorkFlowState, $vaultItemState) {
+	ChangeOrderGroup($flcChangeOrder, $flcWorkFlowState, $vaultItemState) {
+		$this.FlcChangeOrder = $flcChangeOrder
 		$this.FlcWorkflowState = $flcWorkFlowState
 		$this.VaultItemState = $vaultItemState
-		$this.FlcChangeOrders = [System.Collections.Generic.List[PsObject]]::new()
 		$this.FlcAffectedItems = [System.Collections.Generic.List[PsObject]]::new()
 	}
 }
@@ -42,11 +42,6 @@ $vaultStates = $workflow.Settings | Where-Object { $_.Type -eq 'Vault Lifecycle 
 if(-not $flcStates) {
 	throw "Define at least one 'Vault Lifecycle State' setting"
 }
-$flcChangeOrderGroups = @{}
-foreach($flcState in $flcStates) {
-	$vaultState = $vaultStates | Where-Object { $_.Name -eq $flcState.Name }
-	$flcChangeOrderGroups.Add($flcState.Value, [ChangeOrderGroup]::new($flcState.Value, $vaultState.Value))
-}
 
 Write-Host "Add Flc change orders to change order groups"
 $isSyncedToVaultPropertyName = $workflow.Settings | Where-Object { $_.Name -eq 'IsSyncedToVaultProperty' } | Select-Object -ExpandProperty Value
@@ -60,23 +55,24 @@ if(-not $flcChangeOrdersInValidState) {
 	return 
 }
 
+$flcChangeOrderGroups = @()
 foreach($flcChangeOrder in $flcChangeOrdersInValidState) {
-	$flcChangeOrderGroups[$flcChangeOrder.WorkflowState].FlcChangeOrders += $flcChangeOrder
+	$flcState = $flcStates | Where-Object { $_.Value -eq $flcChangeOrder.WorkflowState }
+	$vaultState = $vaultStates | Where-Object { $_.Name -eq $flcState.Name }
+	$flcChangeOrderGroups += [ChangeOrderGroup]::new($flcChangeOrder, $flcChangeOrder.WorkflowState, $vaultState.Value)
 }
 
 Write-Host "Add affected items to change order groups"
-foreach($flcChangeOrderGroup in $flcChangeOrderGroups.Values) {
-	foreach($flcChangeOrder in $flcChangeOrderGroup.FlcChangeOrders) {
-		Write-Host "Title: $($flcChangeOrder.Title) Workspace: $($flcChangeOrder.Workspace)"
-		$affectedFlcItems = Get-FLCItemAssociations -Workspace $flcChangeOrder.Workspace -ItemId $flcChangeOrder.Id -AffectedItems
+foreach($flcChangeOrderGroup in $flcChangeOrderGroups) {
+		Write-Host "Title: $($flcChangeOrder.Title) Workspace: $($flcChangeOrderGroup.FlcChangeOrder.Workspace)"
+		$affectedFlcItems = Get-FLCItemAssociations -Workspace $flcChangeOrderGroup.FlcChangeOrder.Workspace -ItemId $flcChangeOrderGroup.FlcChangeOrder.Id -AffectedItems
 		if(-not $affectedFlcItems) { continue }
 
 		$flcChangeOrderGroup.FlcAffectedItems += $affectedFlcItems
-	}
 }
 
 Write-Host "Update Vault items"
-foreach($flcChangeOrderGroup in $flcChangeOrderGroups.Values) {
+foreach($flcChangeOrderGroup in $flcChangeOrderGroups) {
 	if(-not $flcChangeOrderGroup.FlcAffectedItems) { continue }
 	
 	$allLifeCycleDefs = $vault.LifeCycleService.GetAllLifeCycleDefinitions()
