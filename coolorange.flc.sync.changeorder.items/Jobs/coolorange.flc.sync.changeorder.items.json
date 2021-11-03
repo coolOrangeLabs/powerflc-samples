@@ -12,12 +12,6 @@
       "IsSystem": false
     },
     {
-      "Name": "IsSyncedToVaultProperty",
-      "Type": "FLC Item Details Field",
-      "Value": "Is Synced to Vault",
-      "IsSystem": false
-    },
-    {
       "Name": "InReview",
       "Type": "FLC State",
       "Value": "CCB Review",
