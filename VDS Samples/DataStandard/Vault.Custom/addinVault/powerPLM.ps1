@@ -47,15 +47,12 @@ function OnTabContextChanged_Fusion360Manage
 function GetFlcItem($workspace, $fieldName, $number)
 {
 	if (-not $flcConnection) {
-		$option = $vault.KnowledgeVaultService.GetVaultOption("POWERFLC_SETTINGS")
-		$settings = ConvertFrom-Json $option
-		Connect-FLC -Tenant $settings.Tenant.Name -ClientId $settings.Tenant.ClientId -ClientSecret $settings.Tenant.ClientSecret -UserId $settings.Tenant.SystemUserEmail | Out-Null
+		Connect-FLC -UseSystemUserEmail | Out-Null
 	}
 
 	$flcItem = (Get-FLCItems -Workspace $workspace -Filter ('ITEM_DETAILS:{0}="{1}"' -f $fieldName, $number))[0]
 	return $flcItem
 }
-
 
 function UpdateVaultEntity
 {
