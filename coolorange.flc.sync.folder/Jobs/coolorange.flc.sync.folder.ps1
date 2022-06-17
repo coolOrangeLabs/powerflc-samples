@@ -18,10 +18,10 @@ Import-Module powerFLC
 Write-Host "Starting job '$($job.Name)'..."
 $begin = [DateTime]::UtcNow
 
-Write-Host "Connecting to Fusion Lifecycle..."
-$connected = Connect-FLC -Tenant $tenant.Name -ClientId $tenant.ClientId -ClientSecret $tenant.ClientSecret -UserId $tenant.SystemUserEmail
+Write-Host "Connecting to Fusion 360 Manage..."
+$connected = Connect-FLC -UseSystemUserEmail
 if (-not $connected) {
-    throw "Connection to Fusion Lifecycle failed! Error: `n $($connected.Error.Message)!`n See '$($env:LOCALAPPDATA)\coolOrange\powerFLC\Logs\powerFLC.log' for details"
+    throw "Connection to Fusion 360 Manage failed! Error: `n $($connected.Error.Message)`n See '$($env:LOCALAPPDATA)\coolOrange\powerFLC\Logs\powerFLC.log' for details"
 }
 
 if (-not $workflow) {

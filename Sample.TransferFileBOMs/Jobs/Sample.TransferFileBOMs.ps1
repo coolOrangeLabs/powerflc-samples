@@ -12,18 +12,10 @@ Import-Module powerFLC
 Write-Host "Starting job '$($job.Name)'..."
 $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
 
-$jobs = $vault.JobService.GetJobsByDate([int]::MaxValue, [DateTime]::MinValue)
-$user = $vault.AdminService.GetUserByUserId(($jobs | Where-Object { $_.Id -eq $job.Id }).CreateUserId)
-
-Write-Host "User: '$($user.Name)', Email: '$($user.Email)'"
-if (-not $user.Email) {
-    throw "There is no email address configured for user '$($user.Name)'! The Vault user email address is used to authenticate with Fusion 360 Manage!"
-}
-
 Write-Host "Connecting to Fusion 360 Manage..."
-$connected = Connect-FLC -Tenant $tenant.Name -ClientId $tenant.ClientId -ClientSecret $tenant.ClientSecret -UserId $user.Email
+$connected = Connect-FLC
 if (-not $connected) {
-    throw "Connection to Fusion 360 Manage failed! Error: `n $($connected.Error.Message)!`n See '$($env:LOCALAPPDATA)\coolOrange\powerFLC\Logs\powerFLC.log' for details"
+    throw "Connection to Fusion 360 Manage failed! Error: `n $($connected.Error.Message)`n See '$($env:LOCALAPPDATA)\coolOrange\powerFLC\Logs\powerFLC.log' for details"
 }
 
 if (-not $workflow) {

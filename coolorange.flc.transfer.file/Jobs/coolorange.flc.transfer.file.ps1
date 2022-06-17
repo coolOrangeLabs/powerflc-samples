@@ -34,15 +34,15 @@ if (-not $user.Email) {
     throw "There is no email address configured for user '$($user.Name)'! The Vault user email address is used to authenticate with Fusion Lifecycle!"
 }
 
-Write-Host "Connecting to Fusion Lifecycle..."
-$connected = Connect-FLC -Tenant $tenant.Name -ClientId $tenant.ClientId -ClientSecret $tenant.ClientSecret -UserId $user.Email
+Write-Host "Connecting to Fusion 360 Manage..."
+$connected = Connect-FLC
 if (-not $connected) {
-    throw "Connection to Fusion Lifecycle failed! Error: `n $($connected.Error.Message)!`n See '$($env:LOCALAPPDATA)\coolOrange\powerFLC\Logs\powerFLC.log' for details"
+    throw "Connection to Fusion 360 Manage failed! Error: `n $($connected.Error.Message)`n See '$($env:LOCALAPPDATA)\coolOrange\powerFLC\Logs\powerFLC.log' for details"
 }
 
 if (-not $workflow) {
     throw "Cannot find workflow configuration with name '$($job.Name)'"
-} 
+}
 
 $workspace = $flcConnection.Workspaces.Find($workflow.FlcWorkspace)
 if (-not $workspace) {
