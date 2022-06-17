@@ -1,10 +1,10 @@
 # New Product Introduction (NPI) Workflow
 
 ## Challenge
-New projects in a very early stage need a place where information can be collected and discussed – in Fusion Lifecycle. As soon the project reaches a certain maturity, it’s time to involve engineering. This sample workflow lets you define at which stage of the FLC-project and according Vault-project shall be created in Vault, with given properties and sub-folders. Enginers can now start their work with all information set.
+New projects in a very early stage need a place where information can be collected and discussed – in Fusion 360 Manage. As soon the project reaches a certain maturity, it’s time to involve engineering. This sample workflow lets you define at which stage of the FLC-project and according Vault-project shall be created in Vault, with given properties and sub-folders. Enginers can now start their work with all information set.
 
 ## Description
-The NPI workflow can be used to synchronize Projects, Products or any other Fusion Lifecycle items in a configurable state with Vault folders/projects. The workflow runs on a Vault Job Processor and periodically queues a Fusion Lifecycle workspace for changes. If changes are detected a folder/project gets created or updated in Vault.
+The NPI workflow can be used to synchronize Projects, Products or any other Fusion 360 Manage items in a configurable state with Vault folders/projects. The workflow runs on a Vault Job Processor and periodically queues a Fusion 360 Manage workspace for changes. If changes are detected a folder/project gets created or updated in Vault.
 
 The entire workflow is based on PowerShell scripts and can be customized if needed.
 
@@ -27,10 +27,10 @@ The selected **Workspace** is used to synchronize FLC items with Vault folders/p
 ### Workflow Settings
 
 #### Valid States
-All Fusion Lifecycle items in the selected state will be transferred to Vault.
+All Fusion 360 Manage items in the selected state will be transferred to Vault.
 
 #### Target Folder
-The destination folder for the synchronization. All Fusion Lifecycle items that are created as folder/project in Vault will be created in the selected Vault directory.
+The destination folder for the synchronization. All Fusion 360 Manage items that are created as folder/project in Vault will be created in the selected Vault directory.
 
 #### Folder Category
 The category of the folder/project that is created in Vault.
@@ -43,7 +43,7 @@ All folders and subfolders of this directory are copied to the newly created fol
 
 
 ### Field Mappings  
-An "Item Field Mapping" is available. Values from the **Fusion Lifecycle Item Field** column will be copied to the Vault folder/project UDPs chosen in the **Vault Folder Property** column when a folder/project is created or updated in Vault.  
+An "Item Field Mapping" is available. Values from the **Fusion 360 Manage Item Field** column will be copied to the Vault folder/project UDPs chosen in the **Vault Folder Property** column when a folder/project is created or updated in Vault.  
 
 ## Job Trigger
 ### Regularly trigger jobs
@@ -62,7 +62,7 @@ In order to configure the workflow to be executed in a specific interval the fil
     "Vault":		"Vault",
     // And these two parameters are optional and self-explaining:
     "Priority":		10,
-    "Description":	"Queries Fusion Lifecycle for new/updated Projects"
+    "Description":	"Queries Fusion 360 Manage for new/updated Projects"
     //PowerJobs triggers a Job only if the same job isn't already pending in the job queue.
   }
 }
@@ -77,7 +77,7 @@ The following settings have to be adjusted:
 
 *Note: More information on time triggered jobs can be found here: https://www.coolorange.com/wiki/doku.php?id=powerjobs_processor:jobprocessor:start#time_triggered_jobs*
 
-*Note: For the first run of the time triggered job, all the Fusion Lifecycle items are retrieved that fit to the state defined in the configuration. From second time onwards, only newly created or modified items are retrieved*.
+*Note: For the first run of the time triggered job, all the Fusion 360 Manage items are retrieved that fit to the state defined in the configuration. From second time onwards, only newly created or modified items are retrieved*.
 
 
 ## Activate the Workflow

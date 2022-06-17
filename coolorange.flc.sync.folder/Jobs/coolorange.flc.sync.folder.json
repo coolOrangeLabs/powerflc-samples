@@ -14,7 +14,7 @@
     {
       "Name": "Target Folder",
       "Type": "Vault Folder",
-      "Value": "$/Designs/Fusion Lifecycle",
+      "Value": "$/Designs/Fusion 360 Manage",
       "IsSystem": true
     },
     {
@@ -32,7 +32,7 @@
     {
       "Name": "Folder Structure Template Path",
       "Type": "Vault Folder",
-      "Value": "$/Templates/Fusion Lifecycle",
+      "Value": "$/Templates/Fusion 360 Manage",
       "IsSystem": true
     }
   ],

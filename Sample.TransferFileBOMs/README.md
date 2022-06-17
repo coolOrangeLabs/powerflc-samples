@@ -1,7 +1,7 @@
 # File centric Items and BOM Workflow
 
 ## Description
-The file centric Items and BOM workflow transfers Vault file metadata, file BOM blobs as well as file and drawing attachments to Fusion Lifecycle. The workflow is seamlessly integrated into Vault workflows, triggered by a Vault file state transition and executed on the Autodesk Vault Job Processor.
+The file centric Items and BOM workflow transfers Vault file metadata, file BOM blobs as well as file and drawing attachments to Fusion 360 Manage. The workflow is seamlessly integrated into Vault workflows, triggered by a Vault file state transition and executed on the Autodesk Vault Job Processor.
 
 The entire workflow is based on PowerShell scripts and can be customized if needed.
 
@@ -17,19 +17,19 @@ The coolOrange products "powerJobs Processor" and "powerFLC" must be installed o
 
 ## Settings
 ### Workspace and Unique Fields
-The selected **Workspace** is used to transfer item and BOM data from Vault to Fusion Lifecycle. A field from this workspace must be chosen as Unique Identifier. Typically, this field represents the item number. The unique Vault Property defaults to **Part Number** in Vault.
+The selected **Workspace** is used to transfer item and BOM data from Vault to Fusion 360 Manage. A field from this workspace must be chosen as Unique Identifier. Typically, this field represents the item number. The unique Vault Property defaults to **Part Number** in Vault.
 
 ### Workflow Settings
 ![image](https://user-images.githubusercontent.com/5640189/142255486-745417bc-6807-4396-a865-9e3fc8d513dc.png)
 
 #### Upload File Attachments
-If set to "True" all files attached to a file in Vault are be uploaded as attachment to the corresponding Fusion Lifecycle item
+If set to "True" all files attached to a file in Vault are be uploaded as attachment to the corresponding Fusion 360 Manage item
 
 #### Upload Parent Drawing Attachments
-If set to "True" all files attached to the **parent drawing** of a file in Vault are be uploaded as attachment to the corresponding Fusion Lifecycle item
+If set to "True" all files attached to the **parent drawing** of a file in Vault are be uploaded as attachment to the corresponding Fusion 360 Manage item
 
 ### Field Mappings  
-An "Item Field Mapping" is available. Values from the file properties chosen in **Vault File Property** column will be copied to the Fusion Lifecycle fields chosen in the **Fusion Lifecycle Item Field** column when an item is created or updated in Fusion Lifecycle.  
+An "Item Field Mapping" is available. Values from the file properties chosen in **Vault File Property** column will be copied to the Fusion 360 Manage fields chosen in the **Fusion 360 Manage Item Field** column when an item is created or updated in Fusion 360 Manage.  
 
 *Note: A BOM field mapping is not present in the powerFLC Configuration Manager but can be adjusted in the script file "**C:\ProgramData\coolOrange\powerJobs\Jobs\Sample.TransferFileBOMs.ps1**"*
 

@@ -54,7 +54,7 @@ if (Test-Path $tempFullFileName)
     $filter = "(" + $filter + ")" + " AND (lastModifiedOn>=$lastCheck)"
 }
 
-Write-Host "Retrieving items from Fusion Lifecycle ($($filter))..."
+Write-Host "Retrieving items from Fusion 360 Manage ($($filter))..."
 
 $flcItems = Get-FLCItems -Workspace $workspace.Name -Filter $filter
 Write-Host "$($flcItems.Count) item(s) retrieved"

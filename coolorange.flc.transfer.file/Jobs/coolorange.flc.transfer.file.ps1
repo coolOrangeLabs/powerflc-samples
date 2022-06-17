@@ -31,7 +31,7 @@ if ($supportedExtensions -notcontains $file._Extension) {
 
 Write-Host "User: '$($user.Name)', Email: '$($user.Email)'"
 if (-not $user.Email) {
-    throw "There is no email address configured for user '$($user.Name)'! The Vault user email address is used to authenticate with Fusion Lifecycle!"
+    throw "There is no email address configured for user '$($user.Name)'! The Vault user email address is used to authenticate with Fusion 360 Manage!"
 }
 
 Write-Host "Connecting to Fusion 360 Manage..."
@@ -62,7 +62,7 @@ function CreateOrUpdateFLCItem($entity, $properties) {
     }
 
     if (-not $flcItem -or -not $flcItem.Id) {
-        throw "Item cannot be created/updated in Fusion Lifecycle"
+        throw "Item cannot be created/updated in Fusion 360 Manage"
     } else {
         $urn = "urn:adsk.plm:tenant.workspace.item:$($tenant.Name.ToUpper()).$($workspace.Id).$($flcItem.Id)"
         $vault.PropertyService.SetEntityAttribute($entity.MasterId, "FLC.ITEM", "Urn", $urn);

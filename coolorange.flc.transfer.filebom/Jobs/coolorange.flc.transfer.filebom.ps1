@@ -25,7 +25,7 @@ if (-not $IAmRunningInJobProcessor) {
 
 Write-Host "User: '$($user.Name)', Email: '$($user.Email)'"
 if (-not $user.Email) {
-    throw "There is no email address configured for user '$($user.Name)'! The Vault user email address is used to authenticate with Fusion Lifecycle!"
+    throw "There is no email address configured for user '$($user.Name)'! The Vault user email address is used to authenticate with Fusion 360 Manage!"
 }
 
 Write-Host "Connecting to Fusion 360 Manage..."
@@ -52,10 +52,10 @@ if (-not $bomField) {
 $entityBomRows = Get-VaultFileBom -File $file._FullPath
 foreach ($entityBomRow in $entityBomRows) {
     if (-not $entityBomRow.Bom_PositionNumber) {
-        throw "A BOM with empty Position numbers cannot be transferred to Fusion Lifecycle!"
+        throw "A BOM with empty Position numbers cannot be transferred to Fusion 360 Manage!"
     }
     if (-not [int]::TryParse($entityBomRow.Bom_PositionNumber, [ref] $null)){
-        throw "A BOM with Position number '$($entityBomRow.Bom_PositionNumber)' cannot be transferred to Fusion Lifecycle! The number must be numerical"
+        throw "A BOM with Position number '$($entityBomRow.Bom_PositionNumber)' cannot be transferred to Fusion 360 Manage! The number must be numerical"
     }
 }
 
@@ -71,7 +71,7 @@ function CreateOrUpdateFLCItem($entity, $properties) {
     }
 
     if (-not $flcItem -or -not $flcItem.Id) {
-        throw "Item cannot be created/updated in Fusion Lifecycle"
+        throw "Item cannot be created/updated in Fusion 360 Manage"
     } else {
         $urn = "urn:adsk.plm:tenant.workspace.item:$($tenant.Name.ToUpper()).$($workspace.Id).$($flcItem.Id)"
         $vault.PropertyService.SetEntityAttribute($entity.MasterId, "FLC.ITEM", "Urn", $urn);

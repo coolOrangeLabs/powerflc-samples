@@ -1,7 +1,7 @@
 # File Publishing Workflow
 
 ## Description
-The File Publishing workflow can be used to transfer file metadata and file attachments from Vault to Fusion Lifecycle. The workflow is seamlessly integrated into Vault workflows, triggered by a Vault file state transition and executed on the Autodesk Vault Job Processor.
+The File Publishing workflow can be used to transfer file metadata and file attachments from Vault to Fusion 360 Manage. The workflow is seamlessly integrated into Vault workflows, triggered by a Vault file state transition and executed on the Autodesk Vault Job Processor.
 
 The entire workflow is based on PowerShell scripts and can be customized if needed.
 
@@ -17,23 +17,23 @@ The coolOrange products "powerJobs Processor" and "powerFLC" must be installed o
 
 ## Settings
 ### Workspace and Unique Fields
-The selected **Workspace** is used to transfer item and BOM data from Vault to Fusion Lifecycle. A field from this workspace must be chosen as Unique Identifier. Typically, this field represents the document name. The unique Vault Property defaults to **File Name** and should not be changed.
+The selected **Workspace** is used to transfer item and BOM data from Vault to Fusion 360 Manage. A field from this workspace must be chosen as Unique Identifier. Typically, this field represents the document name. The unique Vault Property defaults to **File Name** and should not be changed.
 
 ### Workflow Settings
 ![image](https://user-images.githubusercontent.com/5640189/101505267-752ff980-3974-11eb-9db3-250ee5f1a1ab.png)
 
 #### Upload File Attachments
-If set to "True" all files attached to a file in Vault are be uploaded as attachment to the corresponding Fusion Lifecycle item
+If set to "True" all files attached to a file in Vault are be uploaded as attachment to the corresponding Fusion 360 Manage item
 
 #### Upload Native Files
-If set to "True" the native file is transferred to Fusion Lifecycle.
+If set to "True" the native file is transferred to Fusion 360 Manage.
 
 #### Supported File Extensions
-The extensions for the native files that are allowed to be transferred to Fusion Lifecycle. Only applicable if **Upload Native Files** is set to "True"  
+The extensions for the native files that are allowed to be transferred to Fusion 360 Manage. Only applicable if **Upload Native Files** is set to "True"  
 *Note: the supported file extension must be specified as a single string, seperated by semi-colons*
 
 ### Field Mappings  
-An "Item Field Mapping" is available. Values from the file properties chosen in **Vault File Property** column will be copied to the Fusion Lifecycle fields chosen in the **Fusion Lifecycle Item Field** column when an item is created or updated in Fusion Lifecycle.  
+An "Item Field Mapping" is available. Values from the file properties chosen in **Vault File Property** column will be copied to the Fusion 360 Manage fields chosen in the **Fusion 360 Manage Item Field** column when an item is created or updated in Fusion 360 Manage.  
 
 ## Job Trigger
 ### Trigger job on Vault file state change
