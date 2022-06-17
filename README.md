@@ -2,9 +2,9 @@
 
 [![Windows](https://img.shields.io/badge/Platform-Windows-lightgray.svg)](https://www.microsoft.com/en-us/windows/)
 [![PowerShell](https://img.shields.io/badge/PowerShell-5-blue.svg)](https://microsoft.com/PowerShell/)
-[![Vault](https://img.shields.io/badge/Autodesk%20Vault-2021-yellow.svg)](https://www.autodesk.com/products/vault/)
+[![Vault](https://img.shields.io/badge/Autodesk%20Vault-2023-yellow.svg)](https://www.autodesk.com/products/vault/)
 
-[![powerJobs](https://img.shields.io/badge/coolOrange%20powerFLC-21-orange.svg)](https://www.coolorange.com/en-eu/connect.html#fusionLifecycle)
+[![powerJobs](https://img.shields.io/badge/coolOrange%20powerPLM-23-orange.svg)](https://www.coolorange.com/powerplm)
 
 ## Disclaimer
 
