@@ -34,13 +34,13 @@ if (-not $workspace) {
 }
 Write-Host "Connected to $($flcConnection.Url) - Workspace: $($workspace.Name)"
 
-$states = Get-FLCStates -Workspace $workspace.Name
+$states = @($workspace.WorkflowActions.FromState; $workspace.WorkflowActions.ToState) | Sort-Object -Property * -Unique
 $stateNames = $workflow.Settings.'Valid States' -split @("; ")
 $stateFilters = @()
 foreach ($stateName in $stateNames) {
-    $state = $states | Where-Object { $_.name -eq $stateName }
+    $state = $states | Where-Object { $_.Name -eq $stateName }
     if ($state) {
-        $stateFilters += "(workflowState=`"$($state.name)`")"
+        $stateFilters += "(workflowState=`"$($state.Name)`")"
     }
 }
 $filter = $stateFilters -join " OR "

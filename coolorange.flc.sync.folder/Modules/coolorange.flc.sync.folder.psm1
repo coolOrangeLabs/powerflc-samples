@@ -1,21 +1,3 @@
-function Get-FLCStates($Workspace) {
-    $result = @()
-    $ws = $flcConnection.Workspaces.Find($Workspace)
-
-    $response = Invoke-RestMethod -Uri "$($flcConnection.Url.AbsoluteUri)api/v3/workspaces/$($ws.Id)/workflows/1/states" -Method Get -Headers @{
-        "Accept"        = "application/json"
-        "Authorization" = $flcConnection.AuthenticationToken
-        "X-user-id"     = $flcConnection.UserId
-        "X-Tenant"      = $flcConnection.Tenant
-    }
-    
-    foreach ($state in $response.states) {
-        $result += $state
-    }
-
-    return $result
-}
-
 function AddFolderProperties($vaultFolder, $propDefs){
     $propInsts = $vault.PropertyService.GetProperties("FLDR", @($vaultFolder.Id), $propDefs.Id)
 
