@@ -6,6 +6,9 @@
 # OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.   #
 #==============================================================================#
 
+# Required in the powerJobs Settings Dialog to determine the entity type for lifecycle state change triggers
+# JobEntityType = FILE
+
 Import-Module powerFLC
 
 #region Load configuration
