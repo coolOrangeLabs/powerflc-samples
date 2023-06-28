@@ -27,16 +27,7 @@ function Test-FlcEqualsVaultItem {
 
 	$mappingName = "Vault Item -> FLC Item"
 	$flcPropertiesWithVaultValues = GetFlcProperties -MappingName $mappingName -Entity $VaultItem
-
-	$primaryFile = (Get-VaultItemAssociations -Number $VaultItem._Number -Primary) | Select-Object -First 1
-	$isPrimarySubcomponent = ($vault.ItemService.GetItemFileAssociationsByItemIds(@($VaultItem.Id), [Autodesk.Connectivity.Webservices.ItemFileLnkTypOpt]::PrimarySub)).FileName -contains $primaryFile.Name
-	if (-not $isPrimarySubcomponent) {
-		$mappingName = "Vault primary Item-File Link -> FLC Item"
-		$flcPropertiesWithVaultValues = GetFlcProperties -MappingName $mappingName -Entity $primaryFile -Properties $flcPropertiesWithVaultValues
-	}
-
 	$mappings = $workflow.Mappings | Where-Object { $_.Name -eq $mappingName }
-
 	foreach( $mapping in $mappings.FieldMappings.GetEnumerator() ) {
 		$newFlcValue = $flcPropertiesWithVaultValues[$mapping.Flc]
 		if($newFlcValue -is [DateTime]) {
@@ -49,6 +40,28 @@ function Test-FlcEqualsVaultItem {
 
 		if("$newFlcValue" -ne "$currentFlcValue") { #casting both values to string to fix incorrect comparison when one value is $null and one is empty string
 			return $false
+		}
+	}
+
+	$primaryFile = (Get-VaultItemAssociations -Number $VaultItem._Number -Primary) | Select-Object -First 1
+	$isPrimarySubcomponent = ($vault.ItemService.GetItemFileAssociationsByItemIds(@($VaultItem.Id), [Autodesk.Connectivity.Webservices.ItemFileLnkTypOpt]::PrimarySub)).FileName -contains $primaryFile.Name
+	if (-not $isPrimarySubcomponent) {
+		$mappingName = "Vault primary Item-File Link -> FLC Item"
+		$flcPropertiesWithVaultValues = GetFlcProperties -MappingName $mappingName -Entity $primaryFile -Properties $flcPropertiesWithVaultValues
+		$mappings = $workflow.Mappings | Where-Object { $_.Name -eq $mappingName }
+		foreach( $mapping in $mappings.FieldMappings.GetEnumerator() ) {
+			$newFlcValue = $flcPropertiesWithVaultValues[$mapping.Flc]
+			if($newFlcValue -is [DateTime]) {
+				$newFlcValue = $newFlcValue.ToString("yyyy-MM-dd") #Fusion items might only store the date, but not the time
+			}
+			$currentFlcValue = $FlcItem.($mapping.Flc)
+			if($currentFlcValue -is [DateTime]) {
+				$currentFlcValue = $currentFlcValue.ToString("yyyy-MM-dd")
+			}
+	
+			if("$newFlcValue" -ne "$currentFlcValue") { #casting both values to string to fix incorrect comparison when one value is $null and one is empty string
+				return $false
+			}
 		}
 	}
 
