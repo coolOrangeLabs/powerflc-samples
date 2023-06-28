@@ -1,0 +1,197 @@
+{
+  "Name": "Sample.TransferItemBOMs",
+  "FlcWorkspace": "Items",
+  "VaultType": "Item",
+  "FlcUnique": "Number",
+  "VaultUnique": "Number",
+  "Settings": [
+    {
+      "Name": "Upload Item Attachments",
+      "Type": "Boolean",
+      "Value": true,
+      "IsSystem": false
+    },
+    {
+      "Name": "Upload Composition Attachments",
+      "Type": "Boolean",
+      "Value": true,
+      "IsSystem": false
+    },
+    {
+      "Name": "Upload Design Document Attachments",
+      "Type": "Boolean",
+      "Value": true,
+      "IsSystem": false
+    },
+    {
+      "Name": "Upload Design Document DWGs",
+      "Type": "Boolean",
+      "Value": true,
+      "IsSystem": false
+    },
+    {
+      "Name": "BOM-Source Field",
+      "Type": "FLC BOM Field",
+      "Value": "Source",
+      "IsSystem": false
+    },
+    {
+      "Name": "BOM-Source Value",
+      "Type": "Text",
+      "Value": "Vault",
+      "IsSystem": false
+    }
+  ],
+  "Mappings": [
+    {
+      "Name": "Vault Item -> FLC Item",
+      "FlcType": "Item Field",
+      "VaultType": "Item",
+      "FieldMappings": [
+        {
+          "Flc": "Number",
+          "Vault": "Number",
+          "Function": null
+        },
+        {
+          "Flc": "Title",
+          "Vault": "Title (Item,CO)",
+          "Function": null
+        },
+        {
+          "Flc": "Description",
+          "Vault": "Description (Item,CO)",
+          "Function": null
+        },
+        {
+          "Flc": "Image",
+          "Vault": "Thumbnail",
+          "Function": null
+        },
+        {
+          "Flc": "Make or Buy",
+          "Vault": "Make or Buy",
+          "Function": null
+        },
+        {
+          "Flc": "Material",
+          "Vault": "Material",
+          "Function": null
+        },
+        {
+          "Flc": "Spare / Wear Part",
+          "Vault": "Spare-Wear Part",
+          "Function": null
+        },
+        {
+          "Flc": "PDM Category",
+          "Vault": "Category Name",
+          "Function": null
+        },
+        {
+          "Flc": "PDM Last Modification Date",
+          "Vault": "Latest Released Date",
+          "Function": null
+        },
+        {
+          "Flc": "PDM Revision Notes",
+          "Vault": "Comment",
+          "Function": null
+        },
+        {
+          "Flc": "Responsible Designer",
+          "Vault": "Last Updated By",
+          "Function": null
+        },
+        {
+          "Flc": "PDM_UNIT_OF_MEASURE",
+          "Vault": "Units",
+          "Function": null
+        },
+        {
+          "Flc": "PDM_STATUS_NAME",
+          "Vault": "State",
+          "Function": null
+        },
+        {
+          "Flc": "PDM_ITEM_REVISION",
+          "Vault": "Revision",
+          "Function": null
+        },
+        {
+          "Flc": "PDM_MASS",
+          "Vault": "Mass",
+          "Function": null
+        },
+        {
+          "Flc": "PDM_SIZE",
+          "Vault": "Dimensions/Size",
+          "Function": null
+        },
+        {
+          "Flc": "PDM_OBJECT_ID",
+          "Vault": null,
+          "Function": "GetObjectId"
+        },
+        {
+          "Flc": "PDM_ITEM_ID",
+          "Vault": null,
+          "Function": "GetEntityId"
+        },
+        {
+          "Flc": "PDM_MASTER_ID",
+          "Vault": null,
+          "Function": "GetEntityMasterId"
+        },
+        {
+          "Flc": "PDM_PERSISTENT_ID",
+          "Vault": null,
+          "Function": "GetVaultPersistentId"
+        }
+      ],
+      "IsSystem": false
+    },
+    {
+      "Name": "Vault BOM -> FLC BOM",
+      "FlcType": "BOM Field",
+      "VaultType": "Bill of Materials",
+      "FieldMappings": [
+        {
+          "Flc": "Qty Pos",
+          "Vault": "Bom_Quantity",
+          "Function": null
+        },
+        {
+          "Flc": "Row Order",
+          "Vault": "Bom_RowOrder",
+          "Function": null
+        }
+      ],
+      "IsSystem": false
+    },
+    {
+      "Name": "Vault primary Item-File Link -> FLC Item",
+      "FlcType": "Item Field",
+      "VaultType": "File",
+      "FieldMappings": [
+        {
+          "Flc": "PDM Folder",
+          "Vault": "Folder Path",
+          "Function": null
+        },
+        {
+          "Flc": "Primary File Name",
+          "Vault": "Name",
+          "Function": null
+        },
+        {
+          "Flc": "Primary File Revision / Version",
+          "Vault": "Revision",
+          "Function": null
+        }
+      ],
+      "IsSystem": false
+    }
+  ],
+  "IsSystem": false
+}
