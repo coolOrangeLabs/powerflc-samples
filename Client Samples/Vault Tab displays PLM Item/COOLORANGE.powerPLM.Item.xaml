@@ -238,12 +238,10 @@
 			</Border>	
 			<Grid Margin="10 0 10 0" Opacity="0.5">
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="Auto"/>
 				</Grid.ColumnDefinitions>
 				
-				<Image Grid.Column="0" Source="pack://application:,,,/powerGate.UI;component/Resources/powerGate_256px.ico" Width="16" Height="16" />
 				<Label Grid.Column="1" Content="powerPLM" FontSize="13" Foreground="#FFFF9900" HorizontalAlignment="Left" />
 				<Label Grid.Column="2" Content="www.coolorange.com" FontSize="11" Foreground="#FFCCCCCC" HorizontalAlignment="Right" />
 			</Grid>
