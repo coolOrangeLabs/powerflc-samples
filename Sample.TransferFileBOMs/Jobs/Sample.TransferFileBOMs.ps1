@@ -80,7 +80,7 @@ foreach ($vaultEntity in $allVaultEntities) {
         $vaultEntity | Add-Member -MemberType NoteProperty -Name $($workflow.VaultUnique) -Value $vaultEntity.'Bom_Part Number'
         $properties = @{ "$($workflow.FlcUnique)" = $vaultEntity.'Bom_Part Number' }
     } else {
-        $properties = GetFlcProperties -MappingName "Vault File -> FLC Item" -Entity $vaultEntity        
+        $properties = GetFlcProperties -MappingName "Vault File -> FLC Item" -Entity $vaultEntity
     }
 
     $paramTransfer = [Hashtable]::Synchronized(@{})
@@ -99,7 +99,7 @@ foreach ($vaultEntity in $allVaultEntities) {
         $workspace = $parameters.Workspace
         $workflow = $parameters.Workflow
         $uniqueFlcFieldId = $parameters.FieldId
-        
+
         $flcItem = (Get-FLCItems -Workspace $workspace.Name -Filter ('ITEM_DETAILS:{0}="{1}"' -f $uniqueFlcFieldId, $vaultEntity."$($workflow.VaultUnique)"))[0]
         if (-not $flcItem) {
             $parameters.Host.UI.WriteLine("Create item $($vaultEntity."$($workflow.VaultUnique)")...")
@@ -113,12 +113,12 @@ foreach ($vaultEntity in $allVaultEntities) {
                     $flcItem = Update-FLCItem -Workspace $flcItem.Workspace -ItemId $flcItem.Id -Properties $properties -ErrorAction Stop
                 } eles {
                     $parameters.Host.UI.WriteLine("File version is identical. No need to update item $($vaultEntity."$($workflow.VaultUnique)")...")
-                }                
+                }
             }
         }
-    
+
         $parameters.VaultEntity | Add-Member -MemberType NoteProperty -Name FlcItem -Value $flcItem
-    
+
         $urn = "urn:adsk.plm:tenant.workspace.item:$($flcConnection.Tenant.ToUpper()).$($workspace.Id).$($flcItem.Id)"
         $vault.PropertyService.SetEntityAttribute($vaultEntity.MasterId, "FLC.ITEM", "Urn", $urn);
     } | InvokeAsync -Parameters $paramTransfer

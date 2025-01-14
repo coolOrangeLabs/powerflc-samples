@@ -20,7 +20,7 @@ if (-not $IAmRunningInJobProcessor) {
     $user = $vault.AdminService.GetUserByUserId($vaultConnection.UserID)
 } else {
     $jobs = $vault.JobService.GetJobsByDate([int]::MaxValue, [DateTime]::MinValue)
-    $user = $vault.AdminService.GetUserByUserId(($jobs | Where-Object { $_.Id -eq $job.Id }).CreateUserId)    
+    $user = $vault.AdminService.GetUserByUserId(($jobs | Where-Object { $_.Id -eq $job.Id }).CreateUserId)
 }
 
 Write-Host "User: '$($user.Name)', Email: '$($user.Email)'"
@@ -59,7 +59,7 @@ foreach ($entityBomRow in $entityBomRows) {
     }
 }
 
-function CreateOrUpdateFLCItem($entity, $properties) {  
+function CreateOrUpdateFLCItem($entity, $properties) {
     $uniqueFlcField = $workspace.ItemFields.Find($workflow.FlcUnique)
     $flcItem = (Get-FLCItems -Workspace $workspace.Name -Filter ('ITEM_DETAILS:{0}="{1}"' -f $uniqueFlcField.Id, $entity."$($workflow.VaultUnique)"))[0]
     if (-not $flcItem) {
@@ -73,7 +73,7 @@ function CreateOrUpdateFLCItem($entity, $properties) {
     if (-not $flcItem -or -not $flcItem.Id) {
         throw "Item cannot be created/updated in Fusion 360 Manage"
     } else {
-        $urn = "urn:adsk.plm:tenant.workspace.item:$($tenant.Name.ToUpper()).$($workspace.Id).$($flcItem.Id)"
+        $urn = "urn:adsk.plm:tenant.workspace.item:$($flcConnection.Tenant.ToUpper()).$($workspace.Id).$($flcItem.Id)"
         $vault.PropertyService.SetEntityAttribute($entity.MasterId, "FLC.ITEM", "Urn", $urn);
     }
 
@@ -135,7 +135,7 @@ foreach ($fileAttachment in $fileAttachments) {
         $paramUpload.Description = $file._Description
         $uploadJobs += {
             param ($flcConnection, [Hashtable]$parameters)
-            $fileName = Split-Path $parameters.LocalPath -leaf  
+            $fileName = Split-Path $parameters.LocalPath -leaf
             $parameters.FlcItem | Add-FLCAttachment -Path $parameters.LocalPath -Title $fileName -Description $parameters.Description
         } | InvokeAsync -Parameters $paramUpload
 
